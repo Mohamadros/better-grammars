@@ -2,7 +2,6 @@ import compression.grammar.PairOfChar;
 import compression.grammar.PairOfCharTerminal;
 import compression.samplegrammars.LiuGrammar;
 import compression.samplegrammars.SampleGrammar;
-import org.junit.*;
 import compression.grammar.NonTerminal;
 import compression.grammar.Rule;
 
@@ -17,7 +16,7 @@ public class LiuProbs4Tests {
 	SampleGrammar Liu = new LiuGrammar(false);
 
 	NonTerminal S = NonTerminal.of("S");
-	NonTerminal T = NonTerminal.of("T");
+	NonTerminal L = NonTerminal.of("L");
 
 	PairOfCharTerminal ao = new PairOfChar('A', '(').asTerminal();
 	PairOfCharTerminal co = new PairOfChar('C', '(').asTerminal();
@@ -37,36 +36,36 @@ public class LiuProbs4Tests {
 
 		HashMap<Rule, Double> res = new HashMap<>();
 
-		res.put(Rule.create(S, T, S), 0.66);
-		res.put(Rule.create(S, T), 0.34);
-		res.put(Rule.create(T, ao, S, uc), 0.071602);
-		res.put(Rule.create(T, uo, S, ac), 0.094385);
-		res.put(Rule.create(T, co, S, gc), 0.144020);
-		res.put(Rule.create(T, go, S, cc), 0.113914);
-		res.put(Rule.create(T, uo, S, gc), 0.026851);
-		res.put(Rule.create(T, go, S, uc), 0.017901);
-		res.put(Rule.create(T, au), 0.183076);
-		res.put(Rule.create(T, cu), 0.087876);
-		res.put(Rule.create(T, gu), 0.101709);
-		res.put(Rule.create(T, uu), 0.158666);
+		res.put(Rule.create(S, L, S), 0.66);
+		res.put(Rule.create(S, L), 0.34);
+		res.put(Rule.create(L, ao, S, uc), 0.071602);
+		res.put(Rule.create(L, uo, S, ac), 0.094385);
+		res.put(Rule.create(L, co, S, gc), 0.144020);
+		res.put(Rule.create(L, go, S, cc), 0.113914);
+		res.put(Rule.create(L, uo, S, gc), 0.026851);
+		res.put(Rule.create(L, go, S, uc), 0.017901);
+		res.put(Rule.create(L, au), 0.183076);
+		res.put(Rule.create(L, cu), 0.087876);
+		res.put(Rule.create(L, gu), 0.101709);
+		res.put(Rule.create(L, uu), 0.158666);
 
 		return res;
 	}
 	public Map<Rule, Double> UniformRuleProbs() {
 		HashMap<Rule, Double> res = new HashMap<>();
 
-		res.put(Rule.create(S, T, S), 0.5);
-		res.put(Rule.create(S, T), 0.5);
-		res.put(Rule.create(T, ao, S, uc), 0.1);
-		res.put(Rule.create(T, uo, S, ac), 0.1);
-		res.put(Rule.create(T, co, S, gc), 0.1);
-		res.put(Rule.create(T, go, S, cc), 0.1);
-		res.put(Rule.create(T, uo, S, gc), 0.1);
-		res.put(Rule.create(T, go, S, uc), 0.1);
-		res.put(Rule.create(T, au), 0.1);
-		res.put(Rule.create(T, cu), 0.1);
-		res.put(Rule.create(T, gu), 0.1);
-		res.put(Rule.create(T, uu), 0.1);
+		res.put(Rule.create(S, L, S), 0.5);
+		res.put(Rule.create(S, L), 0.5);
+		res.put(Rule.create(L, ao, S, uc), 0.1);
+		res.put(Rule.create(L, uo, S, ac), 0.1);
+		res.put(Rule.create(L, co, S, gc), 0.1);
+		res.put(Rule.create(L, go, S, cc), 0.1);
+		res.put(Rule.create(L, uo, S, gc), 0.1);
+		res.put(Rule.create(L, go, S, uc), 0.1);
+		res.put(Rule.create(L, au), 0.1);
+		res.put(Rule.create(L, cu), 0.1);
+		res.put(Rule.create(L, gu), 0.1);
+		res.put(Rule.create(L, uu), 0.1);
 
 		return res;
 	}

@@ -34,38 +34,28 @@ public class GenericRNAEncoderTest {
     public GenericRNAEncoderTest() {
         RNAWS = new RNAWithStructure(pry, sec);
         Liu= new LiuGrammar(false);
-        // TODO: This doesn't work with the old grammars unless in SRF
         parser = new SRFParser<>(Liu.getGrammar());
         S = new NonTerminal("S");
     }
 
     @Test
     public void testTraverseParseTree() throws UnparsableException {
-
         // split string into list of terminals (terminals)
         List<Terminal<PairOfChar>> terminals = RNAWS.asTerminals();
-
-        
-        NonTerminal T = new NonTerminal("T");
-        PairOfCharTerminal gu = new PairOfChar('G', '.').asTerminal();
         List<Rule> der = parser.leftmostDerivationFor(terminals);
-
-        List<Rule> der2 = new ArrayList<>();
-        // TODO Construct derivation manually and compare with the one from the parser
-
-        Assert.assertEquals(der2, der);
-        
-    
+        Assert.assertEquals("[S → L, L → <G|.>]", der.toString());
     }
 
     @Test
     public void testencodeRNA() {
 
+        System.out.println("Liu.getGrammar() = " + Liu.getGrammar());
+        System.out.println("LiuProbs4Tests = " + new LiuProbs4Tests().LiuEtAlRuleProbs());
         GenericRNAEncoder GRA = new GenericRNAEncoder(
                 new StaticRuleProbModel(Liu.getGrammar(),
                         new LiuProbs4Tests().LiuEtAlRuleProbs()),
-                new ExactArithmeticEncoder(), null, S);// FIXME: Grammar is null
+                new ExactArithmeticEncoder(), Liu.getGrammar(), S);
         String encodedString = GRA.encodeRNA(RNAWS);
-        Assert.assertEquals("11100011", encodedString);
+        Assert.assertEquals("111001", encodedString);
     }
 }

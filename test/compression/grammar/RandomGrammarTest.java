@@ -9,9 +9,6 @@ import compression.samplegrammars.model.RuleProbModel;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class RandomGrammarTest {
@@ -53,7 +50,7 @@ public class RandomGrammarTest {
         GenericRNADecoder decoder =
                 new GenericRNADecoder(
                         adaptiveRuleProbModel, arithmeticDecoder,
-                        rnagrammar, rnagrammar.getStartSymbol());
+		                rnagrammar.getStartSymbol());
 
         RNAWithStructure decoded = decoder.decode();
 

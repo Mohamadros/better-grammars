@@ -8,14 +8,11 @@
 import compression.GenericRNADecoder;
 import compression.GenericRNAEncoder;
 import compression.LocalConfig;
-import compression.coding.ArithmeticEncoder;
 import compression.coding.ExactArithmeticDecoder;
 import compression.coding.ExactArithmeticEncoder;
 import compression.data.Dataset;
 import compression.data.FolderBasedDataset;
 import compression.data.TrainingDataset;
-import compression.grammar.Grammar;
-import compression.grammar.PairOfChar;
 import compression.grammar.RNAGrammar;
 import compression.grammar.RNAWithStructure;
 import compression.grammar.SecondaryStructureGrammar;
@@ -24,14 +21,12 @@ import compression.samplegrammars.DowellGrammar1Bound;
 import compression.samplegrammars.SampleGrammar;
 import compression.samplegrammars.model.AdaptiveRuleProbModel;
 import compression.samplegrammars.model.RuleProbModel;
-import compression.samplegrammars.model.SemiAdaptiveRuleProbModel;
 import junit.framework.Assert;
 import org.junit.Test;
 //import org.testng.annotations.Test;
 //import org.junit.Test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,21 +38,21 @@ public class Encode_N_Decode_CorrectlyTest {
     TrainingDataset trainingDataset = new TrainingDataset("TestTrainingData");
     boolean withNonCanonicalRules = true;
     boolean withHairpinLengthOne = true;
-    List<SampleGrammar> listOfGrammars = Arrays.asList(
-            new DowellGrammar1Bound(withNonCanonicalRules)
+    List<SampleGrammar> listOfGrammars = List.of(
+		    new DowellGrammar1Bound(withNonCanonicalRules)
     );
 
     @Test
     public void testEncodeNDecode4AutoGenGrammars() throws IOException {
         List<SecondaryStructureGrammar> listOfGrammars = new ArrayList<>();
-        String folderNameForGrammars= "grammars_first_filter";
-        File grammarFiles = new File(LocalConfig.GIT_ROOT+"/src/GrammarGenerator/"+folderNameForGrammars);
+        String folderNameForGrammars= "testing-10";
+        File grammarFiles = new File(LocalConfig.GIT_ROOT+"/grammars/"+folderNameForGrammars);
 
         File[] listOfFiles = grammarFiles.listFiles();
         Random random = new Random(11124);
         for( int i =0; i<30; i++) {
             File randomGrammarFileSelection = listOfFiles[random.nextInt(listOfFiles.length)];
-            RNAGrammar g = RNAGrammar.from(new GrammarReaderNWriter(randomGrammarFileSelection.getPath()).getGrammarFromFile(), false);
+            RNAGrammar g = RNAGrammar.from(new GrammarReaderNWriter(randomGrammarFileSelection.getPath()).getGrammarFromFile(), true);
 
             //Grammar<PairOfChar> g = RNAGrammar.from(new GrammarReaderNWriter("C:/Users/evita/Documents/GitHub/compressed-rna/src/GrammarGenerator/grammars_first_filter/grammar-2NTs-3rules-1.txt").getGrammarFromFile(),false);
 
@@ -81,13 +76,14 @@ public class Encode_N_Decode_CorrectlyTest {
             //Decoding
             AdaptiveRuleProbModel RPMAdaptive4decode = new AdaptiveRuleProbModel(g);//reset probability model
             ExactArithmeticDecoder AD = new ExactArithmeticDecoder(encodedStringAdaptive);
-            GenericRNADecoder GRAD = new GenericRNADecoder(RPMAdaptive4decode, AD, g, g.getStartSymbol());
+            GenericRNADecoder GRAD = new GenericRNADecoder(RPMAdaptive4decode, AD, g.getStartSymbol());
             RNAWithStructure decoded = GRAD.decode();
 
             Assert.assertEquals(rnaws, decoded);
         }
     }
 
+    @Test
     public void testCorrectness() throws IOException {
         for (SampleGrammar grammar : listOfGrammars) {
             for (RNAWithStructure RNAWS : dataset) {

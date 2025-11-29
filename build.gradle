@@ -1,0 +1,66 @@
+plugins {
+    id 'java'
+}
+
+def jarName = 'joint-rna-compression'
+def mainClassName = 'compression.Compressions'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['test']
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.13.2'
+}
+
+
+tasks.named('jar') {
+    archiveFileName = "${jarName}-with-dependencies.jar"
+
+    destinationDirectory = file("dist")
+
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.named('test') {
+    useJUnit()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+
+
+    // ignoreFailures = false
+}
+
+tasks.named('clean') {
+    delete 'dist'
+}

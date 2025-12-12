@@ -49,6 +49,7 @@ public class CYKParserTest extends TestCase {
         List<Terminal<Character>> word = new ArrayList<>(Arrays.asList(DT,OP,DT,CL));
         assertEquals(testingCYKParser.mostLikelyLeftmostDerivationFor(word).toString(), "[S → F S, F → ., S → O D, O → (, D → S C, S → ., C → )]");
     }
+
     @Test
     public void testCYKParserDerivationToWord(){
         List<Terminal<Character>> word = new ArrayList<>(Arrays.asList(DT,OP,DT,CL));

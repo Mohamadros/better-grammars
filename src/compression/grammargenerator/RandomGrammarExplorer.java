@@ -26,6 +26,26 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
+ * Explores randomly generated {@link SecondaryStructureGrammar}s to find candidates
+ * that are effective for compression. This class provides two primary strategies for
+ * generating random grammars.
+ * <p>
+ * The generation process is handled by two overloaded {@code randomGrammar} methods:
+ * <ul>
+ *     <li>One method generates a grammar by selecting a fixed number of rules
+ *     ({@code nRules}) from the set of all possible rules. This selection is done
+ *     with replacement, so the final grammar may have fewer unique rules than the
+ *     number selected.</li>
+ *     <li>The other method includes each possible rule with a given probability
+ *     ({@code ruleProb}), leading to a variable number of rules in the final grammar.</li>
+ * </ul>
+ * Both methods ensure a valid grammar is returned by retrying if a randomly
+ * generated rule set is structurally inconsistent (e.g., contains non-terminals
+ * with no production rules).
+ * <p>
+ *
+ * TODO: describe {@code main} method
+ *
  * @author Sebastian Wild (wild@liverpool.ac.uk)
  */
 public class RandomGrammarExplorer extends AbstractGrammarExplorer {
@@ -160,6 +180,24 @@ public class RandomGrammarExplorer extends AbstractGrammarExplorer {
 		usedRules = new int[allPossibleRules.length];
 	}
 
+	/**
+	 * Generates a {@link SecondaryStructureGrammar} where each possible rule is included with a given probability.
+	 * <p>
+	 * This method iterates through all possible rules ({@link #allPossibleRules}) and includes each
+	 * rule in the generated grammar with a probability of {@code ruleProb}. This probabilistic approach
+	 * means the exact number of rules in the resulting grammar is not fixed. The method ensures
+	 * that the generated grammar is valid (i.e., does not throw an {@link IllegalArgumentException}
+	 * upon instantiation). If an invalid grammar is created (e.g., one with no rules for a non-terminal),
+	 * the process is repeated until a valid one is successfully generated.
+	 * <p>
+	 * The name of the generated grammar is constructed to include the number of non-terminals and a
+	 * bitmask representing the set of rules chosen.
+	 *
+	 * @param random   the {@link Random} object to use for the probabilistic selection.
+	 * @param ruleProb the probability (between 0.0 and 1.0) of including each possible rule.
+	 * @return A randomly generated, valid {@link SecondaryStructureGrammar}.
+	 * @throws IllegalArgumentException if {@code ruleProb} is not in the range [0, 1].
+	 */
 	private SecondaryStructureGrammar randomGrammar(final Random random, final double ruleProb) {
 		while (true) {
 			try {
@@ -185,8 +223,29 @@ public class RandomGrammarExplorer extends AbstractGrammarExplorer {
 		}
 	}
 
+	/**
+	 * Generates a {@link SecondaryStructureGrammar} with a specified number of randomly chosen rules.
+	 * <p>
+	 * This method attempts to create a grammar by selecting at most {@code nRules} rules at random from the
+	 * set of all possible rules (see the inherited field {@link #allPossibleRules}). The selection is done with replacement,
+	 * so the same rule can be picked multiple times, though it will only be added to the grammar's
+	 * rule set once. The method ensures that the generated grammar is valid (i.e., does not throw
+	 * an {@link IllegalArgumentException} upon instantiation). If an invalid grammar is created,
+	 * the process is repeated until a valid one is successfully generated.
+	 * <p>
+	 * The name of the generated grammar is constructed to include the number of non-terminals,
+	 * the number of rules, and the set of rules chosen.
+	 *
+	 * @param random  the {@link Random} object to use for selecting rules.
+	 * @param nRules  the target number of rules to *attempt* to select for the grammar.
+	 *                Because rules are selected with replacement, the final grammar may contain
+	 *                fewer than {@code nRules} distinct rules. This value must be between 1 and the
+	 *                total number of possible rules.
+	 * @return A randomly generated, valid {@link SecondaryStructureGrammar}.
+	 * @throws IllegalArgumentException if {@code nRules} is not within the valid range.
+	 */
 	public SecondaryStructureGrammar randomGrammar(final Random random, final int nRules) {
-		while (true) {
+		while (true) { // retry until grammar is valid
 			try {
 				if (nRules < 1 || nRules > allPossibleRules.length) {
 					throw new IllegalArgumentException("nRules must be between 1 and " + allPossibleRules.length);

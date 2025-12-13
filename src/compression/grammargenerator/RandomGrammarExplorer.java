@@ -51,6 +51,45 @@ import java.util.stream.Collectors;
 public class RandomGrammarExplorer extends AbstractGrammarExplorer {
 
 
+/**
+ * Command-line utility for exploring and discovering high-performing random grammars.
+ * This program continuously generates random {@link SecondaryStructureGrammar}s,
+ * evaluates their quality based on parsing capability and compression efficiency,
+ * and maintains a sorted list of the best grammars found.
+ *
+ * <p>Usage: {@code RandomGrammarExplorer #nonterminals #rules keepBestK full-dataset [seed] [small-dataset] [rule-prob-model]}
+ *
+ * @param args Command-line arguments:
+ *     <ul>
+ *         <li>{@code #nonterminals}: The number of non-terminal symbols the generated grammars should use.</li>
+ *         <li>{@code #rules}: Can be an integer or a double.
+ *             <ul>
+ *                 <li>If an {@code int}: Specifies the exact number of rules to randomly select (with replacement) for each grammar.</li>
+ *                 <li>If a {@code double} (between 0.0 and 1.0): Specifies the probability with which each possible rule is included in the grammar.</li>
+ *             </ul>
+ *         </li>
+ *         <li>{@code keepBestK}: An integer representing the number of best grammars (ranked by compression score) to maintain and output.</li>
+ *         <li>{@code full-dataset}: The file path to the main dataset folder used for the final compression evaluation.</li>
+ *         <li>{@code [seed]}: (Optional) A long integer seed for the random number generator, ensuring reproducibility. If not provided, {@code System.currentTimeMillis()} is used.</li>
+ *         <li>{@code [small-dataset]}: (Optional) The file path to a smaller dataset folder used for an initial, faster compression evaluation filter. Defaults to "small-dataset".</li>
+ *         <li>{@code [rule-prob-model]}: (Optional) The rule probability model to use, specified as a string ('static', 'semi-adaptive', 'adaptive'). Defaults to 'adaptive'.</li>
+ *     </ul>
+ *
+ * <p>The program operates in a continuous loop:
+ * <ol>
+ *     <li>Generates a random grammar.</li>
+ *     <li>**Level 1 Check (Parsability):** Verifies if the generated grammar can parse a minimal set of known parsable structures ("minimal-parsable" dataset). Grammars failing this check are immediately discarded.</li>
+ *     <li>**Level 2 Check (Small Dataset Compression):** Evaluates the grammar's compression efficiency (average bits per base) on the {@code small-dataset}. Grammars performing worse than the current {@code keepBestK} weakest grammar are discarded.</li>
+ *     <li>**Level 3 Check (Full Dataset Compression):** For grammars passing Level 2, their full compression efficiency is calculated on the {@code full-dataset}.</li>
+ *     <li>If a grammar's full dataset compression score is among the best {@code keepBestK}, it is added to the sorted list of best grammars, and the list is trimmed to maintain size {@code K}.</li>
+ *     <li>The list of best grammars is periodically saved to a file and printed to the console.</li>
+ * </ol>
+ * Any errors during grammar generation or evaluation (e.g., {@link IllegalArgumentException} for invalid grammar structures) are caught, logged, and the program continues with the next grammar.
+ *
+ * @throws IOException if there are issues reading datasets or writing the output file.
+ * @throws NumberFormatException if command-line arguments cannot be parsed correctly.
+ * @throws IllegalArgumentException if the rule probability model is unsupported.
+ */
 	public static void main(String[] args) throws IOException {
 		// Parameters: #nonterminals, #rules, keepBestK, small-dataset, full-dataset
 		// Keep trying grammars and keep the best k grammars

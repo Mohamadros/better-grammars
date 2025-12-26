@@ -1,0 +1,21 @@
+GrammarName
+simpleGrammar1
+
+Start Symbol
+A0
+
+Non-Terminals
+A1
+A0
+
+Terminals
+(
+)
+.
+
+Rules
+A0 -> A0 A0 
+A0 -> ( A1 ) 
+A1 -> ( A1 ) 
+A1 -> A0 
+A0 -> . 

@@ -5,15 +5,14 @@
  */
 package compression;
 
-import compression.coding.ArithmeticDecoder;
-import compression.coding.Interval;
+import compression.arithmaticCoding.bigDecimalAc.ArithmeticDecoder;
+import compression.arithmaticCoding.bigDecimalAc.Interval;
 import compression.grammar.*;
 import compression.samplegrammars.model.RuleProbModel;
 import compression.grammar.Category;
 import compression.grammar.NonTerminal;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;

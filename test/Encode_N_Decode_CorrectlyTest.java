@@ -8,8 +8,8 @@
 import compression.GenericRNADecoder;
 import compression.GenericRNAEncoder;
 import compression.LocalConfig;
-import compression.coding.ExactArithmeticDecoder;
-import compression.coding.ExactArithmeticEncoder;
+import compression.arithmaticCoding.bigDecimalAc.ExactArithmeticDecoder;
+import compression.arithmaticCoding.bigDecimalAc.ExactArithmeticEncoder;
 import compression.data.Dataset;
 import compression.data.FolderBasedDataset;
 import compression.data.TrainingDataset;
@@ -29,7 +29,6 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 

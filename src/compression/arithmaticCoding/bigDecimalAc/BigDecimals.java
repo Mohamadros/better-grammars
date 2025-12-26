@@ -1,4 +1,4 @@
-package compression.coding;
+package compression.arithmaticCoding.bigDecimalAc;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

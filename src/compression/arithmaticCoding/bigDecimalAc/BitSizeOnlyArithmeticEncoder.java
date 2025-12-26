@@ -1,4 +1,4 @@
-package compression.coding;
+package compression.arithmaticCoding.bigDecimalAc;
 
 /**
  * @author Sebastian Wild (wild@uwaterloo.ca)

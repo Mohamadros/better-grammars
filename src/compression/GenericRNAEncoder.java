@@ -1,6 +1,6 @@
 package compression;
 
-import compression.coding.ArithmeticEncoder;
+import compression.arithmaticCoding.bigDecimalAc.ArithmeticEncoder;
 import compression.parser.SRFParser;
 import compression.parser.StochasticParser;
 import compression.samplegrammars.model.RuleProbModel;

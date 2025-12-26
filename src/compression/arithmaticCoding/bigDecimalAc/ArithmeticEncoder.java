@@ -1,4 +1,6 @@
-package compression.coding;
+package compression.arithmaticCoding.bigDecimalAc;
+
+import compression.arithmaticCoding.bigDecimalAc.Interval;
 
 /**
  * Interface for our general abstraction of arithmetic encoding.

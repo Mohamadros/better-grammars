@@ -1,12 +1,10 @@
 package compression;
 
-import compression.coding.ArithmeticEncoder;
-import compression.grammar.PairOfChar;
+import compression.arithmaticCoding.bigDecimalAc.ArithmeticEncoder;
 import compression.grammar.RNAGrammar;
 import compression.grammar.RNAWithStructure;
 import compression.samplegrammars.model.RuleProbModel;
 import compression.grammar.NonTerminal;
-import compression.grammar.Grammar;
 import compression.grammar.Rule;
 
 

@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-import compression.coding.ExactArithmeticEncoder;
+import compression.arithmaticCoding.bigDecimalAc.ExactArithmeticEncoder;
 import compression.grammargenerator.UnparsableException;
-import compression.parser.CYKParser;
 import compression.parser.Parser;
 import compression.parser.SRFParser;
 import compression.samplegrammars.model.StaticRuleProbModel;
@@ -15,7 +14,6 @@ import compression.grammar.NonTerminal;
 import compression.grammar.*;
 import compression.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import compression.samplegrammars.*;

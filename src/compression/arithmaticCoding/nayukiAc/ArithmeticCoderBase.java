@@ -1,4 +1,4 @@
-/* 
+package compression.arithmaticCoding.nayukiAc;/*
  * Reference arithmetic coding
  * 
  * Copyright (c) Project Nayuki
@@ -11,8 +11,8 @@ import java.io.IOException;
 
 /**
  * Provides the state and behaviors that arithmetic coding encoders and decoders share.
- * @see ArithmeticEncoder
- * @see ArithmeticDecoder
+ * @see ArithmeticEncoderNayuki
+ * @see ArithmeticDecoderNayuki
  */
 public abstract class ArithmeticCoderBase {
 	

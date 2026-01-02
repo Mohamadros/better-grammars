@@ -1,4 +1,4 @@
-/* 
+package compression.arithmaticCoding.nayukiAc;/*
  * Reference arithmetic coding
  * 
  * Copyright (c) Project Nayuki
@@ -12,9 +12,9 @@ import java.util.Objects;
 
 /**
  * Encodes symbols and writes to an arithmetic-coded bit stream. Not thread-safe.
- * @see ArithmeticDecoder
+ * @see ArithmeticDecoderNayuki
  */
-public final class ArithmeticEncoder extends ArithmeticCoderBase {
+public final class ArithmeticEncoderNayuki extends ArithmeticCoderBase {
 	
 	/*---- Fields ----*/
 	
@@ -36,7 +36,7 @@ public final class ArithmeticEncoder extends ArithmeticCoderBase {
 	 * @throws NullPointerException if the output stream is {@code null}
 	 * @throws IllegalArgumentException if stateSize is outside the range [1, 62]
 	 */
-	public ArithmeticEncoder(int numBits, BitOutputStream out) {
+	public ArithmeticEncoderNayuki(int numBits, BitOutputStream out) {
 		super(numBits);
 		output = Objects.requireNonNull(out);
 		numUnderflow = 0;

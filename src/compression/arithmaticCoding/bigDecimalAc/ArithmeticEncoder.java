@@ -2,6 +2,8 @@ package compression.arithmaticCoding.bigDecimalAc;
 
 import compression.arithmaticCoding.bigDecimalAc.Interval;
 
+import java.util.List;
+
 /**
  * Interface for our general abstraction of arithmetic encoding.
  */
@@ -25,4 +27,5 @@ public interface ArithmeticEncoder {
      * @return length (in bits) of the final encoding
      */
      int getFinalPrecision();
+
 }

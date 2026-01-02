@@ -1,4 +1,4 @@
-/* 
+package compression.arithmaticCoding.nayukiAc;/*
  * Reference arithmetic coding
  * 
  * Copyright (c) Project Nayuki

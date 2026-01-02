@@ -1,4 +1,4 @@
-/* 
+package compression.arithmaticCoding.nayukiAc;/*
  * Reference arithmetic coding
  * 
  * Copyright (c) Project Nayuki
@@ -34,7 +34,7 @@ public class AdaptiveArithmeticDecompress {
 		
 		// Perform file decompression
 		try (BitInputStream in = new BitInputStream(new BufferedInputStream(new FileInputStream(inputFile)));
-				OutputStream out = new BufferedOutputStream(new FileOutputStream(outputFile))) {
+			 OutputStream out = new BufferedOutputStream(new FileOutputStream(outputFile))) {
 			decompress(in, out);
 		}
 	}
@@ -44,7 +44,7 @@ public class AdaptiveArithmeticDecompress {
 	static void decompress(BitInputStream in, OutputStream out) throws IOException {
 		FlatFrequencyTable initFreqs = new FlatFrequencyTable(257);
 		FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
-		ArithmeticDecoder dec = new ArithmeticDecoder(32, in);
+		ArithmeticDecoderNayuki dec = new ArithmeticDecoderNayuki(32, in);
 		while (true) {
 			// Decode and write one byte
 			int symbol = dec.read(freqs);

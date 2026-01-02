@@ -1,4 +1,4 @@
-/* 
+package compression.arithmaticCoding.nayukiAc;/*
  * Reference arithmetic coding
  * 
  * Copyright (c) Project Nayuki
@@ -52,7 +52,7 @@ public final class PpmCompress {
 		// Set up encoder and model. In this PPM model, symbol 256 represents EOF;
 		// its frequency is 1 in the order -1 context but its frequency
 		// is 0 in all other contexts (which have non-negative order).
-		ArithmeticEncoder enc = new ArithmeticEncoder(32, out);
+		ArithmeticEncoderNayuki enc = new ArithmeticEncoderNayuki(32, out);
 		PpmModel model = new PpmModel(MODEL_ORDER, 257, 256);
 		int[] history = new int[0];
 		
@@ -78,7 +78,7 @@ public final class PpmCompress {
 	}
 	
 	
-	private static void encodeSymbol(PpmModel model, int[] history, int symbol, ArithmeticEncoder enc) throws IOException {
+	private static void encodeSymbol(PpmModel model, int[] history, int symbol, ArithmeticEncoderNayuki enc) throws IOException {
 		// Try to use highest order context that exists based on the history suffix, such
 		// that the next symbol has non-zero frequency. When symbol 256 is produced at a context
 		// at any non-negative order, it means "escape to the next lower order with non-empty

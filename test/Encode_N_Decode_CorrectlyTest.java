@@ -67,6 +67,7 @@ public class Encode_N_Decode_CorrectlyTest {
             //RNAWithStructure rnaws = FolderBasedDataset.readRNA(new File("C:/Users/evita/Documents/GitHub/compressed-rna/datasets/TestDataSet/testRna2.txt"));
 
 
+
             ExactArithmeticEncoder AE = new ExactArithmeticEncoder();
             RuleProbModel RPMAdaptive = new AdaptiveRuleProbModel(g);
             GenericRNAEncoder GRAdaptive = new GenericRNAEncoder(RPMAdaptive, AE, g, g.getStartSymbol());

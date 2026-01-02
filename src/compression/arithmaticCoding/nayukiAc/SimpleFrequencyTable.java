@@ -1,4 +1,4 @@
-/* 
+package compression.arithmaticCoding.nayukiAc;/*
  * Reference arithmetic coding
  * 
  * Copyright (c) Project Nayuki
@@ -47,7 +47,7 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 			throw new IllegalArgumentException("At least 1 symbol needed");
 		if (freqs.length > Integer.MAX_VALUE - 1)
 			throw new IllegalArgumentException("Too many symbols");
-		
+
 		frequencies = freqs.clone();  // Make copy
 		total = 0;
 		for (int x : frequencies) {
@@ -57,8 +57,8 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 		}
 		cumulative = null;
 	}
-	
-	
+
+
 	/**
 	 * Constructs a frequency table by copying the specified frequency table.
 	 * @param freqs the frequency table to copy
@@ -72,7 +72,7 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 		int numSym = freqs.getSymbolLimit();
 		if (numSym < 1)
 			throw new IllegalArgumentException("At least 1 symbol needed");
-		
+
 		frequencies = new int[numSym];
 		total = 0;
 		for (int i = 0; i < frequencies.length; i++) {
@@ -84,11 +84,11 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 		}
 		cumulative = null;
 	}
-	
-	
-	
+
+
+
 	/*---- Methods ----*/
-	
+
 	/**
 	 * Returns the number of symbols in this frequency table, which is at least 1.
 	 * @return the number of symbols in this frequency table
@@ -96,8 +96,8 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 	public int getSymbolLimit() {
 		return frequencies.length;
 	}
-	
-	
+
+
 	/**
 	 * Returns the frequency of the specified symbol. The returned value is at least 0.
 	 * @param symbol the symbol to query
@@ -108,8 +108,8 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 		checkSymbol(symbol);
 		return frequencies[symbol];
 	}
-	
-	
+
+
 	/**
 	 * Sets the frequency of the specified symbol to the specified value. The frequency value
 	 * must be at least 0. If an exception is thrown, then the state is left unchanged.
@@ -122,7 +122,7 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 		checkSymbol(symbol);
 		if (freq < 0)
 			throw new IllegalArgumentException("Negative frequency");
-		
+
 		int temp = total - frequencies[symbol];
 		if (temp < 0)
 			throw new AssertionError();
@@ -130,8 +130,8 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 		frequencies[symbol] = freq;
 		cumulative = null;
 	}
-	
-	
+
+
 	/**
 	 * Increments the frequency of the specified symbol.
 	 * @param symbol the symbol whose frequency to increment
@@ -145,8 +145,8 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 		frequencies[symbol]++;
 		cumulative = null;
 	}
-	
-	
+
+
 	/**
 	 * Returns the total of all symbol frequencies. The returned value is at
 	 * least 0 and is always equal to {@code getHigh(getSymbolLimit() - 1)}.
@@ -155,8 +155,8 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 	public int getTotal() {
 		return total;
 	}
-	
-	
+
+
 	/**
 	 * Returns the sum of the frequencies of all the symbols strictly
 	 * below the specified symbol value. The returned value is at least 0.
@@ -170,8 +170,8 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 			initCumulative();
 		return cumulative[symbol];
 	}
-	
-	
+
+
 	/**
 	 * Returns the sum of the frequencies of the specified symbol
 	 * and all the symbols below. The returned value is at least 0.
@@ -185,8 +185,8 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 			initCumulative();
 		return cumulative[symbol + 1];
 	}
-	
-	
+
+
 	// Recomputes the array of cumulative symbol frequencies.
 	private void initCumulative() {
 		cumulative = new int[frequencies.length + 1];
@@ -200,15 +200,15 @@ public final class SimpleFrequencyTable implements FrequencyTable {
 		if (sum != total)
 			throw new AssertionError();
 	}
-	
-	
+
+
 	// Returns silently if 0 <= symbol < frequencies.length, otherwise throws an exception.
 	private void checkSymbol(int symbol) {
 		if (!(0 <= symbol && symbol < frequencies.length))
 			throw new IllegalArgumentException("Symbol out of range");
 	}
-	
-	
+
+
 	/**
 	 * Returns a string representation of this frequency table,
 	 * useful for debugging only, and the format is subject to change.
